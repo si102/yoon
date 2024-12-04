@@ -54,8 +54,19 @@ int board_initBoard(void)
     shark_position = SHARK_INITPOS;
 // ----- EX. 5 : shark ------------
 
-    //coin allocation
-   
+    //coin allocation ->여기 작성함 = 실습3 
+	for (i=0;i<N_BOARD;i++)
+	{
+		while(board_coin[i]==0)
+		{
+			i=rand()%N_BOARD;
+			
+			if(board_coin[i]==0){
+				//i번째 coin 할당
+				board_coin[i]=(rand()%MAX_COIN)+1;
+			} 
+		}
+	}
     
     return N_COINPOS;
 }
