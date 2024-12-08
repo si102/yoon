@@ -30,7 +30,7 @@ void board_printBoardStatus(void)
     for (i=0;i<N_BOARD;i++)
     {
         printf("|");
-        if (board_status[i] == BOARDSTATpUS_NOK )
+        if (board_status[i] == BOARDSTATUS_NOK )
 		{
         	printf("X"); //x= 파손보드
 		} 
@@ -41,7 +41,10 @@ void board_printBoardStatus(void)
 		}
         	 
         else
-            printf("O");
+		{
+        	printf("O");
+		}
+            
     }
     printf("|\n");
     printf("------------------------------------------------------------\n");
@@ -63,18 +66,21 @@ int board_initBoard(void)
 // ----- EX. 5 : shark ------------
 
     //coin allocation ->여기 작성함 = 실습3 
-    int coin_count=N_COINPOS;
-	for (i=0;i<N_BOARD;i++)
+    int coin_count=0;
+    int coin_amount=0;
+	for (i=0;i<N_BOARD;i++) //i는 0~20까지 
 	{
 		int pos;
-		while(board_coin[i]==0)
+		while(board_coin[i]==0 && coin_count<N_COINPOS) //코인이  
 		{
 			pos=rand()%N_BOARD;
 			
-			if(board_coin[pos]==0)
+			if(board_coin[pos]==0) //빈칸에만 코인 배정 
 			{ 
-				board_coin[pos]=(rand()%MAX_COIN)+1;
-			} 
+				coin_amount=(rand()%MAX_COIN)+1;
+				board_coin[pos]=coin_amount;
+				coin_count+=coin_amount;
+			}
 		}
 	}
     
@@ -121,7 +127,10 @@ int board_getBoardStatus(int pos)
 int board_getBoardCoin(int pos)
 {
     int coin = board_coin[pos];
-    board_coin[pos] = 0;
+    if(coin>0)
+	{
+		board_coin[pos] = 0;
+	}
     return coin;
 }
 // ----- EX. 3 : board ------------

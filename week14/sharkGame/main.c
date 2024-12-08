@@ -242,6 +242,7 @@ int main(int argc, const char * argv[]) {
 		}
         
         //step 2-5. end process
+        board_stepShark();
         checkDie();
         
     	if(game_end()){
