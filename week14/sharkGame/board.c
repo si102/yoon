@@ -111,7 +111,7 @@ int board_stepShark(void)
 		}
 	}
 	
-	printf("shark move : %d\n, new position: %d\n",sharkmove, shark_position);
+	printf("shark move : %d, new position: %d\n",sharkmove, shark_position);
 	
 	return sharkmove;
 }

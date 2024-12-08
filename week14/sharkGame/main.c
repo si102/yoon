@@ -249,6 +249,7 @@ int main(int argc, const char * argv[]) {
     		break;
 		}
 		turn=(turn+1)%N_PLAYER;
+		
 		if(turn%N_PLAYER==0)
 		{
 			board_stepShark();
