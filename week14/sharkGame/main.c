@@ -191,16 +191,18 @@ int main(int argc, const char * argv[]) {
         
         
         //step 2-3. moving
-    	player_status[turn]+=dieRedult;
+    	player_status[turn]+=dieResult;
     	if(player_position[turn]>=N_BOARD){ //끝에 도달 
-    		platyer_position[turn]>=N_BOARD-1;  //끝에 도달 표시법 
-    		player_status[tunr]=PLAYERSTATUS_END; //끝 표현 
+    		player_position[turn]>=N_BOARD-1;  //끝에 도달 표시법 
+    		player_status[turn]=PLAYERSTATUS_END; //끝 표현 
 		}
         //step 2-4. coin
     	
         
         //step 2-5. end process
-    
+    	if(game_end()){
+    		continue;
+		}
 // ----- EX. 6 : game end ------------
     } while(game_end() == 0);
     
