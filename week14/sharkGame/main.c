@@ -140,10 +140,16 @@ int getWinner(void)
 	
 	for (i=0;i<N_PLAYER;i++)
 	{
-		if(player_status[i]==PLAYERSTATUS_LIVE && player_coin[i]>max_coin)
+		if(player_status[i]==PLAYERSTATUS_LIVE)
 		{
-			max_coin=player_coin[i];
-			winner=i;
+			if(player_coin[i]>max_coin)
+			{
+				max_coin=player_coin[i];
+				winner=i;
+			}
+			else if(player_coin[i]==max_coin && winner==-1){ //플레이어의 코인 수가 동일한 경우, 선착순  
+				winner=i;
+			}
 		}
 	}
 	
@@ -214,7 +220,7 @@ int main(int argc, const char * argv[]) {
         //step 2-3. moving
     	player_status[turn]+=dieResult;
     	if(player_position[turn]>=N_BOARD){ //끝에 도달 
-    		player_position[turn]>=N_BOARD-1;  //끝에 도달 표시법 
+    		player_position[turn]=N_BOARD-1;  //끝에 도달 표시법 
     		player_status[turn]=PLAYERSTATUS_END; //끝 표현 
 		}
         //step 2-4. coin
