@@ -62,7 +62,7 @@ int board_initBoard(void)
 			i=rand()%N_BOARD;
 			
 			if(board_coin[i]==0){
-				//i번째 coin 할당
+				//i번째 coin 할당 
 				board_coin[i]=(rand()%MAX_COIN)+1;
 			} 
 		}
