@@ -77,8 +77,11 @@ void printPlayerPosition(int player)
     for (i=0;i<N_BOARD;i++)
     {
         printf("|");
-        if (player_position[player] == i)
-            printf("%c", player_name[player][0]);
+        
+        if (player_position[player] == i){
+        	printf("%c", player_name[player][0]);
+		}
+           
         else
         {
             if (board_getBoardStatus(i) == BOARDSTATUS_NOK)
@@ -94,6 +97,7 @@ void printPlayerStatus(void)
 {
     int i;
     printf("player status ---\n");
+    
     for (i=0;i<N_PLAYER;i++)
     {
         printf("%s : pos %i, coin %i, status %s\n", player_name[i], player_position[i], player_coin[i], player_statusString[player_status[i]]);
@@ -213,27 +217,38 @@ int main(int argc, const char * argv[]) {
         printf("Press any key to roll a die!\n");
         scanf("%d", &dum);
         fflush(stdin);
+        
+		 
 // ----- EX. 4 : player ------------
         dieResult = rolldie();
-        
+        printf("%s roll %d\n",player_name[turn], dieResult); // 주사위 결과 출력
         
         //step 2-3. moving
-    	player_status[turn]+=dieResult;
-    	if(player_position[turn]>=N_BOARD){ //끝에 도달 
+    	player_position[turn]+=dieResult;
+    	printf("%s moved to position %d\n", player_name[turn], player_position[turn]);
+    	if(player_position[turn]>=N_BOARD) //끝에 도달
+		{  
     		player_position[turn]=N_BOARD-1;  //끝에 도달 표시법 
     		player_status[turn]=PLAYERSTATUS_END; //끝 표현 
 		}
+		
+
+		
         //step 2-4. coin
     	coinResult=board_getBoardCoin(player_position[turn]);
     	player_coin[turn]+=coinResult;
-    	if(coinResult>=0){
+    	if(coinResult>0){
     		printf("player %s picked up %d coin(s)\n",player_name[turn], coinResult);
 		}
         
         //step 2-5. end process
+        checkDie();
+        
     	if(game_end()){
     		break;
 		}
+		turn=(turn+1)%N_PLAYER;
+		
 // ----- EX. 6 : game end ------------
     } while(game_end() == 0);
     

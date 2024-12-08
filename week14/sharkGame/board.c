@@ -30,8 +30,16 @@ void board_printBoardStatus(void)
     for (i=0;i<N_BOARD;i++)
     {
         printf("|");
-        if (board_status[i] == BOARDSTATUS_NOK)  
-            printf("X"); //x= 파손보드
+        if (board_status[i] == BOARDSTATpUS_NOK )
+		{
+        	printf("X"); //x= 파손보드
+		} 
+            
+        else if (i==shark_position)
+		{
+        	printf("X"); //상어가 있는 칸
+		}
+        	 
         else
             printf("O");
     }
@@ -55,15 +63,17 @@ int board_initBoard(void)
 // ----- EX. 5 : shark ------------
 
     //coin allocation ->여기 작성함 = 실습3 
+    int coin_count=N_COINPOS;
 	for (i=0;i<N_BOARD;i++)
 	{
+		int pos;
 		while(board_coin[i]==0)
 		{
-			i=rand()%N_BOARD;
+			pos=rand()%N_BOARD;
 			
-			if(board_coin[i]==0){
-				//i번째 coin 할당 
-				board_coin[i]=(rand()%MAX_COIN)+1;
+			if(board_coin[pos]==0)
+			{ 
+				board_coin[pos]=(rand()%MAX_COIN)+1;
 			} 
 		}
 	}
@@ -77,8 +87,27 @@ int board_initBoard(void)
 int board_stepShark(void)
 {
 	int sharkmove=rand()%MAX_SHARKSTEP+1; //랜덤 1~6 
-	shark_position+=sharkmove; //이동 
+	int start_pos=shark_position; 
 	
+	shark_position+=sharkmove; //이동 
+	int i;
+
+	if(shark_position>=N_BOARD)
+	{
+		shark_position=N_BOARD-1;
+	}
+	
+	for(i=start_pos;i<=shark_position;i++) //상어가 지나가면 파손 
+	{
+		if(i>=0 && i<N_BOARD)
+		{
+			board_status[i]=BOARDSTATUS_NOK;
+		}
+	}
+	
+	printf("shark move : %d\n, new position: %d\n",sharkmove, shark_position);
+	
+	return sharkmove;
 }
 // ----- EX. 5 : shark ------------
 
