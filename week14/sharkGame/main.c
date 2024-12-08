@@ -121,12 +121,33 @@ void checkDie(void)
 // ----- EX. 6 : game end ------------
 int getAlivePlayer(void)
 {
+   int i;
+   int cnt=0;
+   for (i=0;i<N_PLAYER;i++)
+   {
+   		if(player_status[i]==PLAYERSTATUS_END)
+   			cnt++;
+   }
    
+   return cnt;
 }
 
 int getWinner(void)
 {
-    
+	int i;
+	int winner=0;
+	int max_coin=-1;
+	
+	for (i=0;i<N_PLAYER;i++)
+	{
+		if(player_status[i]==PLAYERSTATUS_LIVE && player_coin[i]>max_coin)
+		{
+			max_coin=player_coin[i];
+			winner=i;
+		}
+	}
+	
+	return winner;
 }
 // ----- EX. 6 : game end ------------
 
@@ -197,11 +218,15 @@ int main(int argc, const char * argv[]) {
     		player_status[turn]=PLAYERSTATUS_END; //³¡ Ç¥Çö 
 		}
         //step 2-4. coin
-    	
+    	coinResult=board_getBoardCoin(player_position[turn]);
+    	player_coin[turn]+=coinResult;
+    	if(coinResult>=0){
+    		printf("player %s picked up %d coin(s)\n",player_name[turn], coinResult);
+		}
         
         //step 2-5. end process
     	if(game_end()){
-    		continue;
+    		break;
 		}
 // ----- EX. 6 : game end ------------
     } while(game_end() == 0);
