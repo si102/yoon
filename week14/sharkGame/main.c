@@ -242,13 +242,17 @@ int main(int argc, const char * argv[]) {
 		}
         
         //step 2-5. end process
-        board_stepShark();
+        
         checkDie();
         
     	if(game_end()){
     		break;
 		}
 		turn=(turn+1)%N_PLAYER;
+		if(turn%N_PLAYER==0)
+		{
+			board_stepShark();
+		}
 		
 // ----- EX. 6 : game end ------------
     } while(game_end() == 0);
